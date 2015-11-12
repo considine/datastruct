@@ -1,0 +1,20 @@
+For this programmign assignment I used structs to create
+the segment and side class. In these structs I included
+the appropriate attributes.
+
+I used an unordered_map to store all the data, with the side
+being the key and the segment being the value
+
+I had to remake the hash namespace since I was using 
+an unordered map with my custom structs, and I 
+also had to override the equals sign for my sign 
+struct. 
+
+I learned a lot about implementing a data structure
+that uses a hash; it took me a while to realize that I 
+had to change anything and kept wondering why it wasnt compiling
+
+I also got a lot better at parsing stuff since 
+I had to parse so many addresses. Overall I 
+feel like I was able to grasp this programming assignment
+and actually kind of enjoyed it.
