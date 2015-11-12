@@ -1,6 +1,6 @@
 #ifndef STREET_MAP_HPP
 #define STREET_MAP_HPP
-
+#include <map>
 #include <string>
 #include <unordered_map>
 #include "segment.h"
@@ -49,17 +49,19 @@ public:
   //   `url` is the URL of an image displaying the street segment
   //   containing the address.
 
-  bool geocode(std::string &address, std::string &url) const;
-  void readmap(std::string &filename); // helper function of the constructor that will read in the map
+  bool geocode(const std::string &address, std::string &url) const;
+  void readmap(const std::string &filename); // helper function of the constru
   void parseAddress(std::string add); // for parsing the address
+  side parse (std::string &add) const;
   bool search(); // searches for the address
+  std::string search(side Side) const; // searches for the address
   void getRange(int, int);//definig a vector of ranges
 private:
 
   // Add any other member variables and functions you want.
 
   // The main data structure must have a type of the form:
- std::unordered_multimap<side, segment> mymap;
+ std::unordered_map<side, segment> mymap;
  //I will define right here the number of the current address to search for
  //and the street name
  int streetNum;

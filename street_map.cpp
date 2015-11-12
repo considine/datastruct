@@ -10,20 +10,55 @@
 
 using namespace std;
 
-street_map::street_map (string &filename) {
+street_map::street_map (const string &filename) {
   // Fill in your code here.
   //
   readmap(filename);
 }
 
-bool street_map::geocode(string &address, string &url)  {
-  // Fill in your code here.
-    parseAddress(address);
-    bool ans = search();
+bool street_map::geocode(const string &address, string &url) const {  
+    string add =address; 
+    side Side = parse(add);
+    url =  search(Side);
+    if (url.size() > 0 ) return true;
 
-    return ans;
+}
+string street_map::search(side Side)const  {
+  std::unordered_map<side,segment>::const_iterator got = mymap.find (Side);
+  if ( got == mymap.end() )
+    std::cout << "not found";
+  else {
+    vector<int> rangeV = got->second.range;
+    if(std::lower_bound(rangeV.begin(), rangeV.end(), streetNum) != rangeV.end()) {
+      string URL = got->second.url; 	
+        return URL;
+   } else {
+        return "";
+   }
+   }
 }
 
+side street_map::parse(string &add) const {
+
+ string snum;  //string version of the street number
+ string rest;
+ side Side;
+  int num;
+  istringstream iss(add);
+  iss >> snum; 
+  num = stoi(snum);
+  if (add.size() > snum.size()) {
+    rest = add.substr(snum.size()+1, add.size());
+    Side.streetname = rest;
+  }
+  if ((num%2)==0) {
+     Side.parity = 0;
+  }
+  else {
+     Side.parity = 1;
+  } 
+  return Side;
+}
 void street_map::parseAddress(std::string add) {
 
    if (add.size() ==0) return;
@@ -120,7 +155,7 @@ bool street_map::search()  {
   else {
     rangeVec = got->second.range;
     if(std::find(rangeVec.begin(), rangeVec.end(), streetNum) != rangeVec.end()) {
-   	return true; 
+      return true; 
    } else {
    	return false; 
    }
